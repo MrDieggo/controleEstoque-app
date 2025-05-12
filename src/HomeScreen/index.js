@@ -139,11 +139,6 @@ export default function HomeScreen({ navigation }) {
           <Ionicons style={styles.icones} name="pie-chart-outline" size={20} />
           <Text style={styles.btnText}>Relatórios</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Configuracoes')}>
-          <Ionicons style={styles.icones} name="settings-outline" size={20} />
-          <Text style={styles.btnText}>Configurações</Text>
-        </TouchableOpacity>
       </View>
     </ScrollView>
   );
