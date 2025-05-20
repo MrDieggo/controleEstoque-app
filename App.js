@@ -8,7 +8,6 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import ProductScreen from './src/ProductScreen';
 import SaleScreen from './src/SaleScreen';
 import ReportScreen from './src/ReportScreen';
-import Configuracoes from './src/Configs';
 import HomeScreen from './src/HomeScreen'
 
 
@@ -21,7 +20,6 @@ export default function App() {
     Produtos: {lib: MaterialIcons, name:'manage-search'},
     Vendas: {lib: Ionicons, name:'archive-outline'},
     Relatorios: {lib: Ionicons, name:'pie-chart-outline'},
-    Configuracoes: {lib: Ionicons, name:'settings-outline'},
   }
 
   return (
@@ -40,7 +38,6 @@ export default function App() {
         <Tab.Screen name='Produtos' component={ProductScreen}/>
         <Tab.Screen name='Vendas' component={SaleScreen}/>
         <Tab.Screen name='Relatorios' component={ReportScreen}/>
-        <Tab.Screen name='Configuracoes' component={Configuracoes}/>
       </Tab.Navigator>
 
     </NavigationContainer>

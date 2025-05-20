@@ -1,7 +1,12 @@
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet, Alert, Modal } from 'react-native';
+import {
+  View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet,
+  Alert, Modal, Dimensions
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { BarChart } from 'react-native-chart-kit';
 
 export default function ProductScreen() {
   const [products, setProducts] = useState([]);
@@ -104,15 +109,47 @@ export default function ProductScreen() {
                 setEditingProduct(item);
                 setIsModalVisible(true);
               }}>
-                <Text style={styles.editButton}>✏️</Text>
+                <Icon name="edit" size={24} color="#007bff" />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => deleteProduct(item.id)}>
-                <Text style={styles.deleteButton}>🗑️</Text>
+                <Icon name="delete" size={24} color="#d9534f" />
               </TouchableOpacity>
             </View>
           </View>
         )}
       />
+
+      {/* Gráfico */}
+      {products.length > 0 && (
+        <>
+          <Text style={styles.title}>Top Produtos em Estoque</Text>
+          <BarChart
+            data={{
+              labels: products.map(p => p.name.length > 6 ? p.name.slice(0, 6) + '...' : p.name),
+              datasets: [{ data: products.map(p => p.quantity) }],
+            }}
+            width={Dimensions.get('window').width - 40}
+            height={220}
+            fromZero
+            showValuesOnTopOfBars
+            chartConfig={{
+              backgroundColor: '#ffffff',
+              backgroundGradientFrom: '#ffffff',
+              backgroundGradientTo: '#ffffff',
+              decimalPlaces: 0,
+              color: (opacity = 1) => `rgba(76, 175, 80, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              style: {
+                borderRadius: 10,
+              },
+            }}
+            style={{
+              marginVertical: 10,
+              borderRadius: 10,
+            }}
+          />
+        </>
+      )}
 
       <Modal
         visible={isModalVisible}
@@ -214,16 +251,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 10,
     marginLeft: 10,
-  },
-  editButton: {
-    fontSize: 20,
-    color: '#007bff',
-    marginHorizontal: 5,
-  },
-  deleteButton: {
-    fontSize: 20,
-    color: '#d9534f',
-    marginHorizontal: 5,
   },
   modalOverlay: {
     flex: 1,
